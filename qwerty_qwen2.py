@@ -62,7 +62,6 @@ class QwertyQwen2ForCausalLM(Qwen2ForCausalLM):
         """
         if inputs_embeds is None:
             (
-                input_ids,
                 position_ids,
                 attention_mask,
                 inputs_embeds,
@@ -102,7 +101,6 @@ class QwertyQwen2ForCausalLM(Qwen2ForCausalLM):
 
         if images is not None:
             (
-                inputs,
                 position_ids,
                 attention_mask,
                 inputs_embeds,
@@ -149,23 +147,28 @@ class QwertyQwen2ForCausalLM(Qwen2ForCausalLM):
 
         image_token_id = 151665                                                                  # <image>的token_id
 
-        new_position_ids = torch.zeros((batch_size,new_sequence_length))
-        new_attention_mask = torch.zeros((batch_size,new_sequence_length))
-        new_labels = torch.zeros((batch_size,new_sequence_length))                               # 
-        new_inputs_embed = torch.zeros((batch_size,new_sequence_length,3584))                    # Qwen2.5 的嵌入维度是3584
+        new_position_ids = torch.arange(new_sequence_length)
+        new_position_ids = torch.repeat(batch_size,1)
+        new_attention_mask = torch.ones((batch_size,new_sequence_length))
+        new_labels = torch.full((batch_size,new_sequence_length),-100)                            # 
+        new_inputs_embeds = torch.zeros((batch_size,new_sequence_length,3584))                     # Qwen2.5 的嵌入维度是3584
 
         for i in range(batch_size):
             cur_input_ids = input_ids[i]
             image_location_id = torch.where(cur_input_ids==image_token_id)[0].item()
 
-            new_inputs_embed[i,:image_token_id] = self.model.embed_tokens(cur_input_ids[:image_token_id])
-            new_inputs_embed[image_token_id:image_location_id+577] = image_features[i]
-            new_inputs_embed[image_location_id+577:] = self.model.embed_tokens(cur_input_ids[image_token_id+1:])
+            new_inputs_embeds[i,:image_token_id] = self.model.embed_tokens(cur_input_ids[:image_token_id])
+            new_inputs_embeds[image_token_id:image_location_id+577] = image_features[i]
+            new_inputs_embeds[image_location_id+577:] = self.model.embed_tokens(cur_input_ids[image_token_id+1:])
 
+            number_of_zeros = (1-attention_mask[i]).sum().item()
+            new_attention_mask[i][-number_of_zeros:]=0
+            new_position_ids[i][-number_of_zeros:]=0
 
+        new_labels[577-1:]=labels                                                            # 反正前面是一堆-100，图像总是在前面，无论插在哪里，都是把原来非-100的labels往后面移动
 
+        return new_position_ids, new_attention_mask, new_inputs_embeds,new_labels
 
-    
 
 AutoConfig.register('qwerty_qwen2', Qwen2Config)
 AutoModelForCausalLM.register(Qwen2Config, QwertyQwen2ForCausalLM)

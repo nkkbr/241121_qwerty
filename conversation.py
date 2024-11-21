@@ -90,6 +90,13 @@ class Conversation:
         ):
         self.messages.append(role_message_image_list)
 
+    def copy(self):
+        return Conversation(
+            messages=[[x, y] for x, y in self.messages],
+            offset=self.offset,
+            template_style = self.template_style
+            )
+
 conv_qwen2_5 = Conversation(template_style=TemplateStyle.QWEN2_5)
 conv_llama3_1 = Conversation(template_style=TemplateStyle.LLAMA3_1)
 
