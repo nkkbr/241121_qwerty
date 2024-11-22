@@ -1,0 +1,205 @@
+2024-11-22 16:42:38,289 INFO    StreamThr :470796 [internal.py:wandb_internal():85] W&B internal server running at pid: 470796, started at: 2024-11-22 16:42:38.288586
+2024-11-22 16:42:38,291 DEBUG   HandlerThread:470796 [handler.py:handle_request():158] handle_request: status
+2024-11-22 16:42:38,308 INFO    WriterThread:470796 [datastore.py:open_for_write():87] open: /data/uchiha_ssd2/fengqi/241121_qwerty/wandb/run-20241122_164238-uylarkw2/run-uylarkw2.wandb
+2024-11-22 16:42:38,309 DEBUG   SenderThread:470796 [sender.py:send():391] send: header
+2024-11-22 16:42:38,329 DEBUG   SenderThread:470796 [sender.py:send():391] send: run
+2024-11-22 16:42:38,811 INFO    SenderThread:470796 [dir_watcher.py:__init__():211] watching files in: /data/uchiha_ssd2/fengqi/241121_qwerty/wandb/run-20241122_164238-uylarkw2/files
+2024-11-22 16:42:38,811 INFO    SenderThread:470796 [sender.py:_start_run_threads():1200] run started: uylarkw2 with start time 1732261358.303097
+2024-11-22 16:42:38,832 DEBUG   HandlerThread:470796 [handler.py:handle_request():158] handle_request: check_version
+2024-11-22 16:42:38,832 DEBUG   SenderThread:470796 [sender.py:send_request():418] send_request: check_version
+2024-11-22 16:42:38,886 DEBUG   HandlerThread:470796 [handler.py:handle_request():158] handle_request: run_start
+2024-11-22 16:42:38,933 DEBUG   HandlerThread:470796 [system_info.py:__init__():26] System info init
+2024-11-22 16:42:38,933 DEBUG   HandlerThread:470796 [system_info.py:__init__():41] System info init done
+2024-11-22 16:42:38,933 INFO    HandlerThread:470796 [system_monitor.py:start():194] Starting system monitor
+2024-11-22 16:42:38,934 INFO    SystemMonitor:470796 [system_monitor.py:_start():158] Starting system asset monitoring threads
+2024-11-22 16:42:38,934 INFO    HandlerThread:470796 [system_monitor.py:probe():214] Collecting system info
+2024-11-22 16:42:38,935 INFO    SystemMonitor:470796 [interfaces.py:start():188] Started cpu monitoring
+2024-11-22 16:42:38,935 INFO    SystemMonitor:470796 [interfaces.py:start():188] Started disk monitoring
+2024-11-22 16:42:38,936 INFO    SystemMonitor:470796 [interfaces.py:start():188] Started gpu monitoring
+2024-11-22 16:42:38,937 INFO    SystemMonitor:470796 [interfaces.py:start():188] Started memory monitoring
+2024-11-22 16:42:38,938 INFO    SystemMonitor:470796 [interfaces.py:start():188] Started network monitoring
+2024-11-22 16:42:38,976 DEBUG   HandlerThread:470796 [system_info.py:probe():152] Probing system
+2024-11-22 16:42:38,979 DEBUG   HandlerThread:470796 [system_info.py:_probe_git():137] Probing git
+2024-11-22 16:42:39,022 DEBUG   HandlerThread:470796 [system_info.py:_probe_git():145] Probing git done
+2024-11-22 16:42:39,022 DEBUG   HandlerThread:470796 [system_info.py:probe():200] Probing system done
+2024-11-22 16:42:39,022 DEBUG   HandlerThread:470796 [system_monitor.py:probe():223] {'os': 'Linux-5.4.0-198-generic-x86_64-with-glibc2.31', 'python': '3.12.4', 'heartbeatAt': '2024-11-22T07:42:38.976797', 'startedAt': '2024-11-22T07:42:38.282160', 'docker': None, 'cuda': None, 'args': ('--bf16', 'True', '--num_train_epochs', '1', '--per_device_train_batch_size', '4', '--gradient_accumulation_steps', '32', '--evaluation_strategy', 'no', '--save_strategy', 'steps', '--save_steps', '2000', '--save_total_limit', '1', '--learning_rate', '2e-5', '--weight_decay', '0.', '--warmup_ratio', '0.03', '--lr_scheduler_type', 'cosine', '--logging_steps', '1', '--fsdp', 'full_shard auto_wrap', '--fsdp_transformer_layer_cls_to_wrap', 'Qwen2DecoderLayer', '--tf32', 'True'), 'state': 'running', 'program': '/data/uchiha_ssd2/fengqi/241121_qwerty/train.py', 'codePathLocal': 'train.py', 'codePath': 'train.py', 'git': {'remote': 'git@github.com:nkkbr/241121_qwerty.git', 'commit': 'cf93c43e64f97c4f7b63d1df5a22d62371f4497f'}, 'email': 'fengqi2016@outlook.com', 'root': '/data/uchiha_ssd2/fengqi/241121_qwerty', 'host': 'uchiha', 'username': 'fengqi', 'executable': '/data/satori_hdd4/fengqi/anaconda3/envs/base_3_12/bin/python', 'cpu_count': 128, 'cpu_count_logical': 128, 'cpu_freq': {'current': 1.5683828124999988, 'min': 1500.0, 'max': 2450.0}, 'cpu_freq_per_core': [{'current': 1.333, 'min': 1500.0, 'max': 2450.0}, {'current': 1.367, 'min': 1500.0, 'max': 2450.0}, {'current': 1.367, 'min': 1500.0, 'max': 2450.0}, {'current': 1.367, 'min': 1500.0, 'max': 2450.0}, {'current': 1.647, 'min': 1500.0, 'max': 2450.0}, {'current': 1.375, 'min': 1500.0, 'max': 2450.0}, {'current': 1.495, 'min': 1500.0, 'max': 2450.0}, {'current': 1.496, 'min': 1500.0, 'max': 2450.0}, {'current': 1.526, 'min': 1500.0, 'max': 2450.0}, {'current': 1.466, 'min': 1500.0, 'max': 2450.0}, {'current': 1.499, 'min': 1500.0, 'max': 2450.0}, {'current': 1.506, 'min': 1500.0, 'max': 2450.0}, {'current': 1.489, 'min': 1500.0, 'max': 2450.0}, {'current': 1.545, 'min': 1500.0, 'max': 2450.0}, {'current': 1.542, 'min': 1500.0, 'max': 2450.0}, {'current': 1.576, 'min': 1500.0, 'max': 2450.0}, {'current': 1.461, 'min': 1500.0, 'max': 2450.0}, {'current': 1.457, 'min': 1500.0, 'max': 2450.0}, {'current': 1.491, 'min': 1500.0, 'max': 2450.0}, {'current': 1.375, 'min': 1500.0, 'max': 2450.0}, {'current': 1.396, 'min': 1500.0, 'max': 2450.0}, {'current': 1.377, 'min': 1500.0, 'max': 2450.0}, {'current': 1.391, 'min': 1500.0, 'max': 2450.0}, {'current': 1.381, 'min': 1500.0, 'max': 2450.0}, {'current': 1.497, 'min': 1500.0, 'max': 2450.0}, {'current': 1.497, 'min': 1500.0, 'max': 2450.0}, {'current': 1.496, 'min': 1500.0, 'max': 2450.0}, {'current': 1.496, 'min': 1500.0, 'max': 2450.0}, {'current': 1.497, 'min': 1500.0, 'max': 2450.0}, {'current': 1.498, 'min': 1500.0, 'max': 2450.0}, {'current': 1.497, 'min': 1500.0, 'max': 2450.0}, {'current': 1.495, 'min': 1500.0, 'max': 2450.0}, {'current': 1.496, 'min': 1500.0, 'max': 2450.0}, {'current': 1.498, 'min': 1500.0, 'max': 2450.0}, {'current': 1.495, 'min': 1500.0, 'max': 2450.0}, {'current': 1.495, 'min': 1500.0, 'max': 2450.0}, {'current': 1.497, 'min': 1500.0, 'max': 2450.0}, {'current': 1.497, 'min': 1500.0, 'max': 2450.0}, {'current': 1.496, 'min': 1500.0, 'max': 2450.0}, {'current': 1.497, 'min': 1500.0, 'max': 2450.0}, {'current': 1.495, 'min': 1500.0, 'max': 2450.0}, {'current': 1.496, 'min': 1500.0, 'max': 2450.0}, {'current': 1.497, 'min': 1500.0, 'max': 2450.0}, {'current': 1.496, 'min': 1500.0, 'max': 2450.0}, {'current': 1.498, 'min': 1500.0, 'max': 2450.0}, {'current': 1.496, 'min': 1500.0, 'max': 2450.0}, {'current': 1.498, 'min': 1500.0, 'max': 2450.0}, {'current': 1.795, 'min': 1500.0, 'max': 2450.0}, {'current': 1.496, 'min': 1500.0, 'max': 2450.0}, {'current': 1.497, 'min': 1500.0, 'max': 2450.0}, {'current': 1.497, 'min': 1500.0, 'max': 2450.0}, {'current': 1.496, 'min': 1500.0, 'max': 2450.0}, {'current': 1.496, 'min': 1500.0, 'max': 2450.0}, {'current': 1.496, 'min': 1500.0, 'max': 2450.0}, {'current': 1.497, 'min': 1500.0, 'max': 2450.0}, {'current': 1.496, 'min': 1500.0, 'max': 2450.0}, {'current': 1.404, 'min': 1500.0, 'max': 2450.0}, {'current': 1.496, 'min': 1500.0, 'max': 2450.0}, {'current': 1.498, 'min': 1500.0, 'max': 2450.0}, {'current': 1.496, 'min': 1500.0, 'max': 2450.0}, {'current': 1.498, 'min': 1500.0, 'max': 2450.0}, {'current': 1.496, 'min': 1500.0, 'max': 2450.0}, {'current': 1.498, 'min': 1500.0, 'max': 2450.0}, {'current': 1.497, 'min': 1500.0, 'max': 2450.0}, {'current': 1.499, 'min': 1500.0, 'max': 2450.0}, {'current': 1.495, 'min': 1500.0, 'max': 2450.0}, {'current': 1.497, 'min': 1500.0, 'max': 2450.0}, {'current': 1.497, 'min': 1500.0, 'max': 2450.0}, {'current': 1.495, 'min': 1500.0, 'max': 2450.0}, {'current': 1.497, 'min': 1500.0, 'max': 2450.0}, {'current': 1.498, 'min': 1500.0, 'max': 2450.0}, {'current': 1.496, 'min': 1500.0, 'max': 2450.0}, {'current': 1.793, 'min': 1500.0, 'max': 2450.0}, {'current': 1.497, 'min': 1500.0, 'max': 2450.0}, {'current': 1.496, 'min': 1500.0, 'max': 2450.0}, {'current': 1.498, 'min': 1500.0, 'max': 2450.0}, {'current': 1.496, 'min': 1500.0, 'max': 2450.0}, {'current': 1.497, 'min': 1500.0, 'max': 2450.0}, {'current': 1.498, 'min': 1500.0, 'max': 2450.0}, {'current': 1.495, 'min': 1500.0, 'max': 2450.0}, {'current': 2.476, 'min': 1500.0, 'max': 2450.0}, {'current': 2.473, 'min': 1500.0, 'max': 2450.0}, {'current': 2.48, 'min': 1500.0, 'max': 2450.0}, {'current': 2.479, 'min': 1500.0, 'max': 2450.0}, {'current': 2.476, 'min': 1500.0, 'max': 2450.0}, {'current': 3.242, 'min': 1500.0, 'max': 2450.0}, {'current': 2.476, 'min': 1500.0, 'max': 2450.0}, {'current': 2.476, 'min': 1500.0, 'max': 2450.0}, {'current': 1.565, 'min': 1500.0, 'max': 2450.0}, {'current': 1.547, 'min': 1500.0, 'max': 2450.0}, {'current': 1.55, 'min': 1500.0, 'max': 2450.0}, {'current': 1.579, 'min': 1500.0, 'max': 2450.0}, {'current': 1.55, 'min': 1500.0, 'max': 2450.0}, {'current': 1.631, 'min': 1500.0, 'max': 2450.0}, {'current': 1.505, 'min': 1500.0, 'max': 2450.0}, {'current': 1.537, 'min': 1500.0, 'max': 2450.0}, {'current': 1.496, 'min': 1500.0, 'max': 2450.0}, {'current': 1.498, 'min': 1500.0, 'max': 2450.0}, {'current': 1.499, 'min': 1500.0, 'max': 2450.0}, {'current': 1.497, 'min': 1500.0, 'max': 2450.0}, {'current': 1.495, 'min': 1500.0, 'max': 2450.0}, {'current': 1.499, 'min': 1500.0, 'max': 2450.0}, {'current': 1.496, 'min': 1500.0, 'max': 2450.0}, {'current': 1.497, 'min': 1500.0, 'max': 2450.0}, {'current': 1.76, 'min': 1500.0, 'max': 2450.0}, {'current': 2.821, 'min': 1500.0, 'max': 2450.0}, {'current': 1.878, 'min': 1500.0, 'max': 2450.0}, {'current': 1.732, 'min': 1500.0, 'max': 2450.0}, {'current': 1.871, 'min': 1500.0, 'max': 2450.0}, {'current': 1.626, 'min': 1500.0, 'max': 2450.0}, {'current': 1.909, 'min': 1500.0, 'max': 2450.0}, {'current': 1.904, 'min': 1500.0, 'max': 2450.0}, {'current': 1.589, 'min': 1500.0, 'max': 2450.0}, {'current': 1.552, 'min': 1500.0, 'max': 2450.0}, {'current': 1.594, 'min': 1500.0, 'max': 2450.0}, {'current': 1.908, 'min': 1500.0, 'max': 2450.0}, {'current': 1.582, 'min': 1500.0, 'max': 2450.0}, {'current': 1.59, 'min': 1500.0, 'max': 2450.0}, {'current': 1.584, 'min': 1500.0, 'max': 2450.0}, {'current': 1.583, 'min': 1500.0, 'max': 2450.0}, {'current': 1.497, 'min': 1500.0, 'max': 2450.0}, {'current': 1.499, 'min': 1500.0, 'max': 2450.0}, {'current': 1.499, 'min': 1500.0, 'max': 2450.0}, {'current': 1.498, 'min': 1500.0, 'max': 2450.0}, {'current': 1.499, 'min': 1500.0, 'max': 2450.0}, {'current': 1.499, 'min': 1500.0, 'max': 2450.0}, {'current': 1.499, 'min': 1500.0, 'max': 2450.0}, {'current': 1.498, 'min': 1500.0, 'max': 2450.0}], 'disk': {'/': {'total': 875.3497200012207, 'used': 212.43412399291992}}, 'gpu': 'NVIDIA RTX A6000', 'gpu_count': 4, 'gpu_devices': [{'name': 'NVIDIA RTX A6000', 'memory_total': 51527024640}, {'name': 'NVIDIA RTX A6000', 'memory_total': 51527024640}, {'name': 'NVIDIA RTX 6000 Ada Generation', 'memory_total': 51527024640}, {'name': 'NVIDIA RTX 6000 Ada Generation', 'memory_total': 51527024640}], 'memory': {'total': 1007.7837600708008}}
+2024-11-22 16:42:39,023 INFO    HandlerThread:470796 [system_monitor.py:probe():224] Finished collecting system info
+2024-11-22 16:42:39,023 INFO    HandlerThread:470796 [system_monitor.py:probe():227] Publishing system info
+2024-11-22 16:42:39,026 DEBUG   HandlerThread:470796 [system_info.py:_save_conda():209] Saving list of conda packages installed into the current environment
+2024-11-22 16:42:39,813 INFO    Thread-12 :470796 [dir_watcher.py:_on_file_created():271] file/dir created: /data/uchiha_ssd2/fengqi/241121_qwerty/wandb/run-20241122_164238-uylarkw2/files/conda-environment.yaml
+2024-11-22 16:42:52,026 DEBUG   HandlerThread:470796 [system_info.py:_save_conda():224] Saving conda packages done
+2024-11-22 16:42:52,028 INFO    HandlerThread:470796 [system_monitor.py:probe():229] Finished publishing system info
+2024-11-22 16:42:52,046 DEBUG   HandlerThread:470796 [handler.py:handle_request():158] handle_request: status_report
+2024-11-22 16:42:52,046 DEBUG   HandlerThread:470796 [handler.py:handle_request():158] handle_request: keepalive
+2024-11-22 16:42:52,046 DEBUG   HandlerThread:470796 [handler.py:handle_request():158] handle_request: status_report
+2024-11-22 16:42:52,046 DEBUG   HandlerThread:470796 [handler.py:handle_request():158] handle_request: keepalive
+2024-11-22 16:42:52,047 DEBUG   SenderThread:470796 [sender.py:send():391] send: files
+2024-11-22 16:42:52,047 INFO    SenderThread:470796 [sender.py:_save_file():1466] saving file wandb-metadata.json with policy now
+2024-11-22 16:42:52,728 DEBUG   HandlerThread:470796 [handler.py:handle_request():158] handle_request: python_packages
+2024-11-22 16:42:52,728 DEBUG   SenderThread:470796 [sender.py:send_request():418] send_request: python_packages
+2024-11-22 16:42:52,729 DEBUG   HandlerThread:470796 [handler.py:handle_request():158] handle_request: stop_status
+2024-11-22 16:42:52,729 DEBUG   SenderThread:470796 [sender.py:send_request():418] send_request: stop_status
+2024-11-22 16:42:52,731 DEBUG   HandlerThread:470796 [handler.py:handle_request():158] handle_request: internal_messages
+2024-11-22 16:42:52,756 INFO    wandb-upload_0:470796 [upload_job.py:push():130] Uploaded file /tmp/tmp6yzptp0lwandb/ip9coiop-wandb-metadata.json
+2024-11-22 16:42:52,815 INFO    Thread-12 :470796 [dir_watcher.py:_on_file_modified():288] file/dir modified: /data/uchiha_ssd2/fengqi/241121_qwerty/wandb/run-20241122_164238-uylarkw2/files/conda-environment.yaml
+2024-11-22 16:42:52,815 INFO    Thread-12 :470796 [dir_watcher.py:_on_file_created():271] file/dir created: /data/uchiha_ssd2/fengqi/241121_qwerty/wandb/run-20241122_164238-uylarkw2/files/requirements.txt
+2024-11-22 16:42:52,815 INFO    Thread-12 :470796 [dir_watcher.py:_on_file_created():271] file/dir created: /data/uchiha_ssd2/fengqi/241121_qwerty/wandb/run-20241122_164238-uylarkw2/files/wandb-metadata.json
+2024-11-22 16:42:52,982 DEBUG   SenderThread:470796 [sender.py:send():391] send: telemetry
+2024-11-22 16:42:52,982 DEBUG   SenderThread:470796 [sender.py:send():391] send: config
+2024-11-22 16:42:52,983 DEBUG   SenderThread:470796 [sender.py:send():391] send: telemetry
+2024-11-22 16:42:52,983 DEBUG   SenderThread:470796 [sender.py:send():391] send: metric
+2024-11-22 16:42:52,983 DEBUG   SenderThread:470796 [sender.py:send():391] send: telemetry
+2024-11-22 16:42:52,983 DEBUG   SenderThread:470796 [sender.py:send():391] send: metric
+2024-11-22 16:42:52,983 WARNING SenderThread:470796 [sender.py:send_metric():1417] Seen metric with glob (shouldn't happen)
+2024-11-22 16:42:52,983 DEBUG   SenderThread:470796 [sender.py:send():391] send: telemetry
+2024-11-22 16:42:52,983 DEBUG   SenderThread:470796 [sender.py:send():391] send: telemetry
+2024-11-22 16:42:52,983 DEBUG   SenderThread:470796 [sender.py:send():391] send: config
+2024-11-22 16:42:53,729 DEBUG   HandlerThread:470796 [handler.py:handle_request():158] handle_request: internal_messages
+2024-11-22 16:42:53,815 INFO    Thread-12 :470796 [dir_watcher.py:_on_file_created():271] file/dir created: /data/uchiha_ssd2/fengqi/241121_qwerty/wandb/run-20241122_164238-uylarkw2/files/output.log
+2024-11-22 16:42:53,940 DEBUG   HandlerThread:470796 [handler.py:handle_request():158] handle_request: status_report
+2024-11-22 16:42:54,729 DEBUG   HandlerThread:470796 [handler.py:handle_request():158] handle_request: internal_messages
+2024-11-22 16:42:55,587 DEBUG   SenderThread:470796 [sender.py:send():391] send: exit
+2024-11-22 16:42:55,587 INFO    SenderThread:470796 [sender.py:send_exit():598] handling exit code: 1
+2024-11-22 16:42:55,587 INFO    SenderThread:470796 [sender.py:send_exit():600] handling runtime: 16
+2024-11-22 16:42:55,587 INFO    SenderThread:470796 [sender.py:_save_file():1466] saving file wandb-summary.json with policy end
+2024-11-22 16:42:55,588 INFO    SenderThread:470796 [sender.py:send_exit():606] send defer
+2024-11-22 16:42:55,588 DEBUG   HandlerThread:470796 [handler.py:handle_request():158] handle_request: defer
+2024-11-22 16:42:55,588 INFO    HandlerThread:470796 [handler.py:handle_request_defer():184] handle defer: 0
+2024-11-22 16:42:55,588 DEBUG   SenderThread:470796 [sender.py:send_request():418] send_request: defer
+2024-11-22 16:42:55,588 INFO    SenderThread:470796 [sender.py:send_request_defer():622] handle sender defer: 0
+2024-11-22 16:42:55,588 INFO    SenderThread:470796 [sender.py:transition_state():626] send defer: 1
+2024-11-22 16:42:55,588 DEBUG   HandlerThread:470796 [handler.py:handle_request():158] handle_request: defer
+2024-11-22 16:42:55,588 INFO    HandlerThread:470796 [handler.py:handle_request_defer():184] handle defer: 1
+2024-11-22 16:42:55,588 DEBUG   SenderThread:470796 [sender.py:send_request():418] send_request: defer
+2024-11-22 16:42:55,588 INFO    SenderThread:470796 [sender.py:send_request_defer():622] handle sender defer: 1
+2024-11-22 16:42:55,588 INFO    SenderThread:470796 [sender.py:transition_state():626] send defer: 2
+2024-11-22 16:42:55,588 DEBUG   HandlerThread:470796 [handler.py:handle_request():158] handle_request: defer
+2024-11-22 16:42:55,588 INFO    HandlerThread:470796 [handler.py:handle_request_defer():184] handle defer: 2
+2024-11-22 16:42:55,588 INFO    HandlerThread:470796 [system_monitor.py:finish():203] Stopping system monitor
+2024-11-22 16:42:55,589 DEBUG   SystemMonitor:470796 [system_monitor.py:_start():172] Starting system metrics aggregation loop
+2024-11-22 16:42:55,590 DEBUG   SystemMonitor:470796 [system_monitor.py:_start():179] Finished system metrics aggregation loop
+2024-11-22 16:42:55,590 INFO    HandlerThread:470796 [interfaces.py:finish():200] Joined cpu monitor
+2024-11-22 16:42:55,590 DEBUG   SystemMonitor:470796 [system_monitor.py:_start():183] Publishing last batch of metrics
+2024-11-22 16:42:55,590 INFO    HandlerThread:470796 [interfaces.py:finish():200] Joined disk monitor
+2024-11-22 16:42:55,816 INFO    Thread-12 :470796 [dir_watcher.py:_on_file_modified():288] file/dir modified: /data/uchiha_ssd2/fengqi/241121_qwerty/wandb/run-20241122_164238-uylarkw2/files/output.log
+2024-11-22 16:42:55,816 INFO    Thread-12 :470796 [dir_watcher.py:_on_file_created():271] file/dir created: /data/uchiha_ssd2/fengqi/241121_qwerty/wandb/run-20241122_164238-uylarkw2/files/wandb-summary.json
+2024-11-22 16:42:55,962 INFO    HandlerThread:470796 [interfaces.py:finish():200] Joined gpu monitor
+2024-11-22 16:42:55,962 INFO    HandlerThread:470796 [interfaces.py:finish():200] Joined memory monitor
+2024-11-22 16:42:55,963 INFO    HandlerThread:470796 [interfaces.py:finish():200] Joined network monitor
+2024-11-22 16:42:55,963 DEBUG   SenderThread:470796 [sender.py:send_request():418] send_request: defer
+2024-11-22 16:42:55,963 INFO    SenderThread:470796 [sender.py:send_request_defer():622] handle sender defer: 2
+2024-11-22 16:42:55,963 INFO    SenderThread:470796 [sender.py:transition_state():626] send defer: 3
+2024-11-22 16:42:55,963 DEBUG   HandlerThread:470796 [handler.py:handle_request():158] handle_request: defer
+2024-11-22 16:42:55,963 DEBUG   SenderThread:470796 [sender.py:send():391] send: stats
+2024-11-22 16:42:55,963 INFO    HandlerThread:470796 [handler.py:handle_request_defer():184] handle defer: 3
+2024-11-22 16:42:55,965 DEBUG   SenderThread:470796 [sender.py:send_request():418] send_request: defer
+2024-11-22 16:42:55,965 INFO    SenderThread:470796 [sender.py:send_request_defer():622] handle sender defer: 3
+2024-11-22 16:42:55,965 INFO    SenderThread:470796 [sender.py:transition_state():626] send defer: 4
+2024-11-22 16:42:55,965 DEBUG   HandlerThread:470796 [handler.py:handle_request():158] handle_request: defer
+2024-11-22 16:42:55,965 INFO    HandlerThread:470796 [handler.py:handle_request_defer():184] handle defer: 4
+2024-11-22 16:42:55,965 DEBUG   SenderThread:470796 [sender.py:send_request():418] send_request: defer
+2024-11-22 16:42:55,965 INFO    SenderThread:470796 [sender.py:send_request_defer():622] handle sender defer: 4
+2024-11-22 16:42:55,965 INFO    SenderThread:470796 [sender.py:transition_state():626] send defer: 5
+2024-11-22 16:42:55,965 DEBUG   HandlerThread:470796 [handler.py:handle_request():158] handle_request: defer
+2024-11-22 16:42:55,966 INFO    HandlerThread:470796 [handler.py:handle_request_defer():184] handle defer: 5
+2024-11-22 16:42:55,966 DEBUG   SenderThread:470796 [sender.py:send():391] send: summary
+2024-11-22 16:42:55,966 INFO    SenderThread:470796 [sender.py:_save_file():1466] saving file wandb-summary.json with policy end
+2024-11-22 16:42:55,967 DEBUG   SenderThread:470796 [sender.py:send_request():418] send_request: defer
+2024-11-22 16:42:55,967 INFO    SenderThread:470796 [sender.py:send_request_defer():622] handle sender defer: 5
+2024-11-22 16:42:55,967 INFO    SenderThread:470796 [sender.py:transition_state():626] send defer: 6
+2024-11-22 16:42:55,967 DEBUG   HandlerThread:470796 [handler.py:handle_request():158] handle_request: defer
+2024-11-22 16:42:55,967 INFO    HandlerThread:470796 [handler.py:handle_request_defer():184] handle defer: 6
+2024-11-22 16:42:55,967 DEBUG   SenderThread:470796 [sender.py:send_request():418] send_request: defer
+2024-11-22 16:42:55,967 INFO    SenderThread:470796 [sender.py:send_request_defer():622] handle sender defer: 6
+2024-11-22 16:42:55,972 DEBUG   HandlerThread:470796 [handler.py:handle_request():158] handle_request: status_report
+2024-11-22 16:42:56,427 INFO    SenderThread:470796 [sender.py:transition_state():626] send defer: 7
+2024-11-22 16:42:56,427 DEBUG   HandlerThread:470796 [handler.py:handle_request():158] handle_request: defer
+2024-11-22 16:42:56,428 INFO    HandlerThread:470796 [handler.py:handle_request_defer():184] handle defer: 7
+2024-11-22 16:42:56,428 DEBUG   SenderThread:470796 [sender.py:send_request():418] send_request: defer
+2024-11-22 16:42:56,428 INFO    SenderThread:470796 [sender.py:send_request_defer():622] handle sender defer: 7
+2024-11-22 16:42:56,587 DEBUG   HandlerThread:470796 [handler.py:handle_request():158] handle_request: poll_exit
+2024-11-22 16:42:56,816 INFO    Thread-12 :470796 [dir_watcher.py:_on_file_modified():288] file/dir modified: /data/uchiha_ssd2/fengqi/241121_qwerty/wandb/run-20241122_164238-uylarkw2/files/wandb-summary.json
+2024-11-22 16:42:56,816 INFO    Thread-12 :470796 [dir_watcher.py:_on_file_modified():288] file/dir modified: /data/uchiha_ssd2/fengqi/241121_qwerty/wandb/run-20241122_164238-uylarkw2/files/config.yaml
+2024-11-22 16:42:57,018 INFO    SenderThread:470796 [sender.py:transition_state():626] send defer: 8
+2024-11-22 16:42:57,018 DEBUG   SenderThread:470796 [sender.py:send_request():418] send_request: poll_exit
+2024-11-22 16:42:57,018 DEBUG   HandlerThread:470796 [handler.py:handle_request():158] handle_request: defer
+2024-11-22 16:42:57,018 INFO    HandlerThread:470796 [handler.py:handle_request_defer():184] handle defer: 8
+2024-11-22 16:42:57,019 DEBUG   SenderThread:470796 [sender.py:send_request():418] send_request: defer
+2024-11-22 16:42:57,019 INFO    SenderThread:470796 [sender.py:send_request_defer():622] handle sender defer: 8
+2024-11-22 16:42:57,019 INFO    SenderThread:470796 [job_builder.py:build():443] Attempting to build job artifact
+2024-11-22 16:42:57,020 INFO    SenderThread:470796 [job_builder.py:_get_source_type():572] is repo sourced job
+2024-11-22 16:42:57,055 INFO    SenderThread:470796 [job_builder.py:build():548] adding wandb-job metadata file
+2024-11-22 16:42:57,061 INFO    SenderThread:470796 [sender.py:transition_state():626] send defer: 9
+2024-11-22 16:42:57,061 DEBUG   HandlerThread:470796 [handler.py:handle_request():158] handle_request: defer
+2024-11-22 16:42:57,062 INFO    HandlerThread:470796 [handler.py:handle_request_defer():184] handle defer: 9
+2024-11-22 16:42:57,062 DEBUG   SenderThread:470796 [sender.py:send():391] send: artifact
+2024-11-22 16:42:57,588 DEBUG   HandlerThread:470796 [handler.py:handle_request():158] handle_request: poll_exit
+2024-11-22 16:42:57,816 INFO    Thread-12 :470796 [dir_watcher.py:_on_file_modified():288] file/dir modified: /data/uchiha_ssd2/fengqi/241121_qwerty/wandb/run-20241122_164238-uylarkw2/files/output.log
+2024-11-22 16:42:58,007 INFO    SenderThread:470796 [sender.py:send_artifact():1549] sent artifact job-git_github.com_nkkbr_241121_qwerty.git_train.py - {'id': 'QXJ0aWZhY3Q6MTM0NTA4NzUyOQ==', 'state': 'COMMITTED', 'artifactSequence': {'id': 'QXJ0aWZhY3RDb2xsZWN0aW9uOjQ5Nzk3ODIyMg==', 'latestArtifact': {'id': 'QXJ0aWZhY3Q6MTM0NTA4NzUyOQ==', 'versionIndex': 0}}}
+2024-11-22 16:42:58,007 DEBUG   SenderThread:470796 [sender.py:send_request():418] send_request: defer
+2024-11-22 16:42:58,007 INFO    SenderThread:470796 [sender.py:send_request_defer():622] handle sender defer: 9
+2024-11-22 16:42:58,007 INFO    SenderThread:470796 [dir_watcher.py:finish():358] shutting down directory watcher
+2024-11-22 16:42:58,817 INFO    SenderThread:470796 [dir_watcher.py:finish():388] scan: /data/uchiha_ssd2/fengqi/241121_qwerty/wandb/run-20241122_164238-uylarkw2/files
+2024-11-22 16:42:58,817 INFO    SenderThread:470796 [dir_watcher.py:finish():402] scan save: /data/uchiha_ssd2/fengqi/241121_qwerty/wandb/run-20241122_164238-uylarkw2/files/config.yaml config.yaml
+2024-11-22 16:42:58,817 INFO    SenderThread:470796 [dir_watcher.py:finish():402] scan save: /data/uchiha_ssd2/fengqi/241121_qwerty/wandb/run-20241122_164238-uylarkw2/files/conda-environment.yaml conda-environment.yaml
+2024-11-22 16:42:58,818 INFO    SenderThread:470796 [dir_watcher.py:finish():402] scan save: /data/uchiha_ssd2/fengqi/241121_qwerty/wandb/run-20241122_164238-uylarkw2/files/wandb-metadata.json wandb-metadata.json
+2024-11-22 16:42:58,818 INFO    SenderThread:470796 [dir_watcher.py:finish():402] scan save: /data/uchiha_ssd2/fengqi/241121_qwerty/wandb/run-20241122_164238-uylarkw2/files/requirements.txt requirements.txt
+2024-11-22 16:42:58,818 INFO    SenderThread:470796 [dir_watcher.py:finish():402] scan save: /data/uchiha_ssd2/fengqi/241121_qwerty/wandb/run-20241122_164238-uylarkw2/files/output.log output.log
+2024-11-22 16:42:58,820 INFO    SenderThread:470796 [dir_watcher.py:finish():402] scan save: /data/uchiha_ssd2/fengqi/241121_qwerty/wandb/run-20241122_164238-uylarkw2/files/wandb-summary.json wandb-summary.json
+2024-11-22 16:42:58,823 INFO    SenderThread:470796 [sender.py:transition_state():626] send defer: 10
+2024-11-22 16:42:58,823 DEBUG   SenderThread:470796 [sender.py:send_request():418] send_request: poll_exit
+2024-11-22 16:42:58,826 DEBUG   HandlerThread:470796 [handler.py:handle_request():158] handle_request: defer
+2024-11-22 16:42:58,826 INFO    HandlerThread:470796 [handler.py:handle_request_defer():184] handle defer: 10
+2024-11-22 16:42:58,826 DEBUG   SenderThread:470796 [sender.py:send_request():418] send_request: defer
+2024-11-22 16:42:58,826 INFO    SenderThread:470796 [sender.py:send_request_defer():622] handle sender defer: 10
+2024-11-22 16:42:58,826 INFO    SenderThread:470796 [file_pusher.py:finish():169] shutting down file pusher
+2024-11-22 16:42:59,257 INFO    wandb-upload_0:470796 [upload_job.py:push():130] Uploaded file /data/uchiha_ssd2/fengqi/241121_qwerty/wandb/run-20241122_164238-uylarkw2/files/config.yaml
+2024-11-22 16:42:59,374 INFO    wandb-upload_3:470796 [upload_job.py:push():130] Uploaded file /data/uchiha_ssd2/fengqi/241121_qwerty/wandb/run-20241122_164238-uylarkw2/files/output.log
+2024-11-22 16:42:59,375 INFO    wandb-upload_1:470796 [upload_job.py:push():130] Uploaded file /data/uchiha_ssd2/fengqi/241121_qwerty/wandb/run-20241122_164238-uylarkw2/files/conda-environment.yaml
+2024-11-22 16:42:59,408 INFO    wandb-upload_2:470796 [upload_job.py:push():130] Uploaded file /data/uchiha_ssd2/fengqi/241121_qwerty/wandb/run-20241122_164238-uylarkw2/files/requirements.txt
+2024-11-22 16:42:59,453 INFO    wandb-upload_4:470796 [upload_job.py:push():130] Uploaded file /data/uchiha_ssd2/fengqi/241121_qwerty/wandb/run-20241122_164238-uylarkw2/files/wandb-summary.json
+2024-11-22 16:42:59,589 DEBUG   HandlerThread:470796 [handler.py:handle_request():158] handle_request: poll_exit
+2024-11-22 16:42:59,589 DEBUG   SenderThread:470796 [sender.py:send_request():418] send_request: poll_exit
+2024-11-22 16:42:59,653 INFO    Thread-11 (_thread_body):470796 [sender.py:transition_state():626] send defer: 11
+2024-11-22 16:42:59,654 DEBUG   HandlerThread:470796 [handler.py:handle_request():158] handle_request: defer
+2024-11-22 16:42:59,654 INFO    HandlerThread:470796 [handler.py:handle_request_defer():184] handle defer: 11
+2024-11-22 16:42:59,654 DEBUG   SenderThread:470796 [sender.py:send_request():418] send_request: defer
+2024-11-22 16:42:59,654 INFO    SenderThread:470796 [sender.py:send_request_defer():622] handle sender defer: 11
+2024-11-22 16:42:59,654 INFO    SenderThread:470796 [file_pusher.py:join():175] waiting for file pusher
+2024-11-22 16:42:59,655 INFO    SenderThread:470796 [sender.py:transition_state():626] send defer: 12
+2024-11-22 16:42:59,655 DEBUG   HandlerThread:470796 [handler.py:handle_request():158] handle_request: defer
+2024-11-22 16:42:59,655 INFO    HandlerThread:470796 [handler.py:handle_request_defer():184] handle defer: 12
+2024-11-22 16:42:59,655 DEBUG   SenderThread:470796 [sender.py:send_request():418] send_request: defer
+2024-11-22 16:42:59,655 INFO    SenderThread:470796 [sender.py:send_request_defer():622] handle sender defer: 12
+2024-11-22 16:42:59,655 INFO    SenderThread:470796 [file_stream.py:finish():601] file stream finish called
+2024-11-22 16:42:59,837 INFO    SenderThread:470796 [file_stream.py:finish():605] file stream finish is done
+2024-11-22 16:42:59,837 INFO    SenderThread:470796 [sender.py:transition_state():626] send defer: 13
+2024-11-22 16:42:59,838 DEBUG   HandlerThread:470796 [handler.py:handle_request():158] handle_request: defer
+2024-11-22 16:42:59,838 INFO    HandlerThread:470796 [handler.py:handle_request_defer():184] handle defer: 13
+2024-11-22 16:42:59,838 DEBUG   SenderThread:470796 [sender.py:send_request():418] send_request: defer
+2024-11-22 16:42:59,838 INFO    SenderThread:470796 [sender.py:send_request_defer():622] handle sender defer: 13
+2024-11-22 16:42:59,838 INFO    SenderThread:470796 [sender.py:transition_state():626] send defer: 14
+2024-11-22 16:42:59,838 DEBUG   HandlerThread:470796 [handler.py:handle_request():158] handle_request: defer
+2024-11-22 16:42:59,838 INFO    HandlerThread:470796 [handler.py:handle_request_defer():184] handle defer: 14
+2024-11-22 16:42:59,838 DEBUG   SenderThread:470796 [sender.py:send():391] send: final
+2024-11-22 16:42:59,838 DEBUG   SenderThread:470796 [sender.py:send():391] send: footer
+2024-11-22 16:42:59,839 DEBUG   SenderThread:470796 [sender.py:send_request():418] send_request: defer
+2024-11-22 16:42:59,839 INFO    SenderThread:470796 [sender.py:send_request_defer():622] handle sender defer: 14
+2024-11-22 16:42:59,839 DEBUG   HandlerThread:470796 [handler.py:handle_request():158] handle_request: poll_exit
+2024-11-22 16:42:59,839 DEBUG   SenderThread:470796 [sender.py:send_request():418] send_request: poll_exit
+2024-11-22 16:42:59,840 DEBUG   HandlerThread:470796 [handler.py:handle_request():158] handle_request: server_info
+2024-11-22 16:42:59,840 DEBUG   SenderThread:470796 [sender.py:send_request():418] send_request: server_info
+2024-11-22 16:42:59,841 DEBUG   HandlerThread:470796 [handler.py:handle_request():158] handle_request: poll_exit
+2024-11-22 16:42:59,842 DEBUG   HandlerThread:470796 [handler.py:handle_request():158] handle_request: get_summary
+2024-11-22 16:42:59,842 DEBUG   HandlerThread:470796 [handler.py:handle_request():158] handle_request: sampled_history
+2024-11-22 16:42:59,842 DEBUG   HandlerThread:470796 [handler.py:handle_request():158] handle_request: internal_messages
+2024-11-22 16:43:00,016 DEBUG   SenderThread:470796 [sender.py:send_request():418] send_request: poll_exit
+2024-11-22 16:43:00,017 INFO    MainThread:470796 [wandb_run.py:_footer_history_summary_info():4076] rendering history
+2024-11-22 16:43:00,017 INFO    MainThread:470796 [wandb_run.py:_footer_history_summary_info():4108] rendering summary
+2024-11-22 16:43:00,017 INFO    MainThread:470796 [wandb_run.py:_footer_sync_info():4035] logging synced files
+2024-11-22 16:43:00,018 DEBUG   HandlerThread:470796 [handler.py:handle_request():158] handle_request: shutdown
+2024-11-22 16:43:00,018 INFO    HandlerThread:470796 [handler.py:finish():880] shutting down handler
+2024-11-22 16:43:00,842 INFO    WriterThread:470796 [datastore.py:close():296] close: /data/uchiha_ssd2/fengqi/241121_qwerty/wandb/run-20241122_164238-uylarkw2/run-uylarkw2.wandb
+2024-11-22 16:43:01,017 INFO    SenderThread:470796 [sender.py:finish():1631] shutting down sender
+2024-11-22 16:43:01,017 INFO    SenderThread:470796 [file_pusher.py:finish():169] shutting down file pusher
+2024-11-22 16:43:01,017 INFO    SenderThread:470796 [file_pusher.py:join():175] waiting for file pusher

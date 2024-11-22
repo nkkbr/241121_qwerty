@@ -1,0 +1,131 @@
+
+  0%|                                                                                                                                                                                                 | 0/4651 [00:00<?, ?it/s]Traceback (most recent call last):
+  File "/data/uchiha_ssd2/fengqi/241121_qwerty/train.py", line 323, in <module>
+    train()
+  File "/data/uchiha_ssd2/fengqi/241121_qwerty/train.py", line 314, in train
+    trainer.train()
+  File "/data/satori_hdd4/fengqi/anaconda3/envs/base_3_12/lib/python3.12/site-packages/transformers/trainer.py", line 2122, in train
+    return inner_training_loop(
+           ^^^^^^^^^^^^^^^^^^^^
+  File "/data/satori_hdd4/fengqi/anaconda3/envs/base_3_12/lib/python3.12/site-packages/transformers/trainer.py", line 2474, in _inner_training_loop
+    tr_loss_step = self.training_step(model, inputs, num_items_in_batch)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/data/satori_hdd4/fengqi/anaconda3/envs/base_3_12/lib/python3.12/site-packages/transformers/trainer.py", line 3572, in training_step
+    loss = self.compute_loss(model, inputs, num_items_in_batch=num_items_in_batch)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/data/satori_hdd4/fengqi/anaconda3/envs/base_3_12/lib/python3.12/site-packages/transformers/trainer.py", line 3625, in compute_loss
+    outputs = model(**inputs)
+              ^^^^^^^^^^^^^^^
+  File "/data/satori_hdd4/fengqi/anaconda3/envs/base_3_12/lib/python3.12/site-packages/torch/nn/modules/module.py", line 1553, in _wrapped_call_impl
+    return self._call_impl(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/data/satori_hdd4/fengqi/anaconda3/envs/base_3_12/lib/python3.12/site-packages/torch/nn/modules/module.py", line 1562, in _call_impl
+    return forward_call(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/data/satori_hdd4/fengqi/anaconda3/envs/base_3_12/lib/python3.12/site-packages/accelerate/utils/operations.py", line 820, in forward
+    return model_forward(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/data/satori_hdd4/fengqi/anaconda3/envs/base_3_12/lib/python3.12/site-packages/accelerate/utils/operations.py", line 808, in __call__
+    return convert_to_fp32(self.model_forward(*args, **kwargs))
+                           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/data/satori_hdd4/fengqi/anaconda3/envs/base_3_12/lib/python3.12/site-packages/torch/amp/autocast_mode.py", line 43, in decorate_autocast
+    return func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "/data/satori_hdd4/fengqi/anaconda3/envs/base_3_12/lib/python3.12/site-packages/torch/distributed/fsdp/fully_sharded_data_parallel.py", line 863, in forward
+    output = self._fsdp_wrapped_module(*args, **kwargs)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/data/satori_hdd4/fengqi/anaconda3/envs/base_3_12/lib/python3.12/site-packages/torch/nn/modules/module.py", line 1553, in _wrapped_call_impl
+    return self._call_impl(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/data/satori_hdd4/fengqi/anaconda3/envs/base_3_12/lib/python3.12/site-packages/torch/nn/modules/module.py", line 1562, in _call_impl
+    return forward_call(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/data/satori_hdd4/fengqi/anaconda3/envs/base_3_12/lib/python3.12/site-packages/accelerate/utils/operations.py", line 820, in forward
+    return model_forward(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/data/satori_hdd4/fengqi/anaconda3/envs/base_3_12/lib/python3.12/site-packages/accelerate/utils/operations.py", line 808, in __call__
+    return convert_to_fp32(self.model_forward(*args, **kwargs))
+                           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/data/satori_hdd4/fengqi/anaconda3/envs/base_3_12/lib/python3.12/site-packages/torch/amp/autocast_mode.py", line 43, in decorate_autocast
+    return func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "/data/uchiha_ssd2/fengqi/241121_qwerty/qwerty_qwen2.py", line 77, in forward
+    return super().forward(
+           ^^^^^^^^^^^^^^^^
+  File "/data/satori_hdd4/fengqi/anaconda3/envs/base_3_12/lib/python3.12/site-packages/transformers/models/qwen2/modeling_qwen2.py", line 1164, in forward
+    outputs = self.model(
+              ^^^^^^^^^^^
+  File "/data/satori_hdd4/fengqi/anaconda3/envs/base_3_12/lib/python3.12/site-packages/torch/nn/modules/module.py", line 1553, in _wrapped_call_impl
+    return self._call_impl(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/data/satori_hdd4/fengqi/anaconda3/envs/base_3_12/lib/python3.12/site-packages/torch/nn/modules/module.py", line 1562, in _call_impl
+    return forward_call(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/data/satori_hdd4/fengqi/anaconda3/envs/base_3_12/lib/python3.12/site-packages/transformers/models/qwen2/modeling_qwen2.py", line 830, in forward
+    raise ValueError("You must specify exactly one of input_ids or inputs_embeds")
+ValueError: You must specify exactly one of input_ids or inputs_embeds
+[rank0]: Traceback (most recent call last):
+[rank0]:   File "/data/uchiha_ssd2/fengqi/241121_qwerty/train.py", line 323, in <module>
+[rank0]:     train()
+[rank0]:   File "/data/uchiha_ssd2/fengqi/241121_qwerty/train.py", line 314, in train
+[rank0]:     trainer.train()
+[rank0]:   File "/data/satori_hdd4/fengqi/anaconda3/envs/base_3_12/lib/python3.12/site-packages/transformers/trainer.py", line 2122, in train
+[rank0]:     return inner_training_loop(
+[rank0]:            ^^^^^^^^^^^^^^^^^^^^
+[rank0]:   File "/data/satori_hdd4/fengqi/anaconda3/envs/base_3_12/lib/python3.12/site-packages/transformers/trainer.py", line 2474, in _inner_training_loop
+[rank0]:     tr_loss_step = self.training_step(model, inputs, num_items_in_batch)
+[rank0]:                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+[rank0]:   File "/data/satori_hdd4/fengqi/anaconda3/envs/base_3_12/lib/python3.12/site-packages/transformers/trainer.py", line 3572, in training_step
+[rank0]:     loss = self.compute_loss(model, inputs, num_items_in_batch=num_items_in_batch)
+[rank0]:            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+[rank0]:   File "/data/satori_hdd4/fengqi/anaconda3/envs/base_3_12/lib/python3.12/site-packages/transformers/trainer.py", line 3625, in compute_loss
+[rank0]:     outputs = model(**inputs)
+[rank0]:               ^^^^^^^^^^^^^^^
+[rank0]:   File "/data/satori_hdd4/fengqi/anaconda3/envs/base_3_12/lib/python3.12/site-packages/torch/nn/modules/module.py", line 1553, in _wrapped_call_impl
+[rank0]:     return self._call_impl(*args, **kwargs)
+[rank0]:            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+[rank0]:   File "/data/satori_hdd4/fengqi/anaconda3/envs/base_3_12/lib/python3.12/site-packages/torch/nn/modules/module.py", line 1562, in _call_impl
+[rank0]:     return forward_call(*args, **kwargs)
+[rank0]:            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+[rank0]:   File "/data/satori_hdd4/fengqi/anaconda3/envs/base_3_12/lib/python3.12/site-packages/accelerate/utils/operations.py", line 820, in forward
+[rank0]:     return model_forward(*args, **kwargs)
+[rank0]:            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+[rank0]:   File "/data/satori_hdd4/fengqi/anaconda3/envs/base_3_12/lib/python3.12/site-packages/accelerate/utils/operations.py", line 808, in __call__
+[rank0]:     return convert_to_fp32(self.model_forward(*args, **kwargs))
+[rank0]:                            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+[rank0]:   File "/data/satori_hdd4/fengqi/anaconda3/envs/base_3_12/lib/python3.12/site-packages/torch/amp/autocast_mode.py", line 43, in decorate_autocast
+[rank0]:     return func(*args, **kwargs)
+[rank0]:            ^^^^^^^^^^^^^^^^^^^^^
+[rank0]:   File "/data/satori_hdd4/fengqi/anaconda3/envs/base_3_12/lib/python3.12/site-packages/torch/distributed/fsdp/fully_sharded_data_parallel.py", line 863, in forward
+[rank0]:     output = self._fsdp_wrapped_module(*args, **kwargs)
+[rank0]:              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+[rank0]:   File "/data/satori_hdd4/fengqi/anaconda3/envs/base_3_12/lib/python3.12/site-packages/torch/nn/modules/module.py", line 1553, in _wrapped_call_impl
+[rank0]:     return self._call_impl(*args, **kwargs)
+[rank0]:            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+[rank0]:   File "/data/satori_hdd4/fengqi/anaconda3/envs/base_3_12/lib/python3.12/site-packages/torch/nn/modules/module.py", line 1562, in _call_impl
+[rank0]:     return forward_call(*args, **kwargs)
+[rank0]:            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+[rank0]:   File "/data/satori_hdd4/fengqi/anaconda3/envs/base_3_12/lib/python3.12/site-packages/accelerate/utils/operations.py", line 820, in forward
+[rank0]:     return model_forward(*args, **kwargs)
+[rank0]:            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+[rank0]:   File "/data/satori_hdd4/fengqi/anaconda3/envs/base_3_12/lib/python3.12/site-packages/accelerate/utils/operations.py", line 808, in __call__
+[rank0]:     return convert_to_fp32(self.model_forward(*args, **kwargs))
+[rank0]:                            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+[rank0]:   File "/data/satori_hdd4/fengqi/anaconda3/envs/base_3_12/lib/python3.12/site-packages/torch/amp/autocast_mode.py", line 43, in decorate_autocast
+[rank0]:     return func(*args, **kwargs)
+[rank0]:            ^^^^^^^^^^^^^^^^^^^^^
+[rank0]:   File "/data/uchiha_ssd2/fengqi/241121_qwerty/qwerty_qwen2.py", line 77, in forward
+[rank0]:     return super().forward(
+[rank0]:            ^^^^^^^^^^^^^^^^
+[rank0]:   File "/data/satori_hdd4/fengqi/anaconda3/envs/base_3_12/lib/python3.12/site-packages/transformers/models/qwen2/modeling_qwen2.py", line 1164, in forward
+[rank0]:     outputs = self.model(
+[rank0]:               ^^^^^^^^^^^
+[rank0]:   File "/data/satori_hdd4/fengqi/anaconda3/envs/base_3_12/lib/python3.12/site-packages/torch/nn/modules/module.py", line 1553, in _wrapped_call_impl
+[rank0]:     return self._call_impl(*args, **kwargs)
+[rank0]:            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+[rank0]:   File "/data/satori_hdd4/fengqi/anaconda3/envs/base_3_12/lib/python3.12/site-packages/torch/nn/modules/module.py", line 1562, in _call_impl
+[rank0]:     return forward_call(*args, **kwargs)
+[rank0]:            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+[rank0]:   File "/data/satori_hdd4/fengqi/anaconda3/envs/base_3_12/lib/python3.12/site-packages/transformers/models/qwen2/modeling_qwen2.py", line 830, in forward
+[rank0]:     raise ValueError("You must specify exactly one of input_ids or inputs_embeds")
+[rank0]: ValueError: You must specify exactly one of input_ids or inputs_embeds

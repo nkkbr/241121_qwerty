@@ -13,7 +13,7 @@ class QwertyConfig(Qwen2Config):
 
 
 class QwertyQwen2Model(Qwen2Model):
-    config_class = Qwen2Config
+    config_class = QwertyConfig
 
     def __init__(self, config: Qwen2Config):
         super().__init__(config)
@@ -27,12 +27,12 @@ class QwertyQwen2Model(Qwen2Model):
 
 
 class QwertyQwen2ForCausalLM(Qwen2ForCausalLM):
-    config_class = Qwen2Config
+    config_class = QwertyConfig
 
     def __init__(self, config):
-        super(Qwen2Model, self).__init__(config)
+        super(Qwen2ForCausalLM, self).__init__(config)
         self.model = QwertyQwen2Model(config)
-        self.pretraining_tp = config.pretraining_tp
+        # self.pretraining_tp = config.pretraining_tp
         self.vocab_size = config.vocab_size
         self.lm_head = nn.Linear(config.hidden_size, config.vocab_size, bias=False)
 
@@ -62,6 +62,7 @@ class QwertyQwen2ForCausalLM(Qwen2ForCausalLM):
         """
         if inputs_embeds is None:
             (
+                input_ids,
                 position_ids,
                 attention_mask,
                 inputs_embeds,
@@ -101,6 +102,7 @@ class QwertyQwen2ForCausalLM(Qwen2ForCausalLM):
 
         if images is not None:
             (
+                input_ids,
                 position_ids,
                 attention_mask,
                 inputs_embeds,
@@ -139,8 +141,8 @@ class QwertyQwen2ForCausalLM(Qwen2ForCausalLM):
                                              labels,
                                              images):
         
-        image_features = self.vision_model(images,output_hidden_states=True).hidden_states[-2]   # 选取了倒数第二层，形状是(batch_size, 577, 1024) 577是一个CLS + (336/14)**2。 也可以不选CLS，只使用(batch_size, 576, 1024)
-        image_features = self.mm_projector(image_features)                                       # (batch_size, 577, 3584)
+        image_features = self.model.vision_model(images,output_hidden_states=True).hidden_states[-2]   # 选取了倒数第二层，形状是(batch_size, 577, 1024) 577是一个CLS + (336/14)**2。 也可以不选CLS，只使用(batch_size, 576, 1024)
+        image_features = self.model.mm_projector(image_features)                                       # (batch_size, 577, 3584)
         
         batch_size = input_ids.shape[0]
         new_sequence_length = input_ids.shape[-1] + 577 - 1                                      # 如果你不选CLS，那么这里就是576
@@ -148,27 +150,28 @@ class QwertyQwen2ForCausalLM(Qwen2ForCausalLM):
         image_token_id = 151665                                                                  # <image>的token_id
 
         new_position_ids = torch.arange(new_sequence_length)
-        new_position_ids = torch.repeat(batch_size,1)
+        new_position_ids = new_position_ids.repeat(batch_size,1)
         new_attention_mask = torch.ones((batch_size,new_sequence_length))
-        new_labels = torch.full((batch_size,new_sequence_length),-100)                            # 
-        new_inputs_embeds = torch.zeros((batch_size,new_sequence_length,3584))                     # Qwen2.5 的嵌入维度是3584
+        new_labels = torch.full((batch_size,new_sequence_length),-100)                           # 
+        new_inputs_embeds = torch.zeros((batch_size,new_sequence_length,3584))                   # Qwen2.5 的嵌入维度是3584
 
         for i in range(batch_size):
             cur_input_ids = input_ids[i]
-            image_location_id = torch.where(cur_input_ids==image_token_id)[0].item()
+            image_location = torch.where(cur_input_ids==image_token_id)[0].item()
 
-            new_inputs_embeds[i,:image_token_id] = self.model.embed_tokens(cur_input_ids[:image_token_id])
-            new_inputs_embeds[image_token_id:image_location_id+577] = image_features[i]
-            new_inputs_embeds[image_location_id+577:] = self.model.embed_tokens(cur_input_ids[image_token_id+1:])
+            new_inputs_embeds[i,:image_location] = self.model.embed_tokens(cur_input_ids[:image_location])
+            new_inputs_embeds[i,image_location:image_location+577] = image_features[i]
+            new_inputs_embeds[i,image_location+577:] = self.model.embed_tokens(cur_input_ids[image_location+1:])
 
-            number_of_zeros = (1-attention_mask[i]).sum().item()
-            new_attention_mask[i][-number_of_zeros:]=0
-            new_position_ids[i][-number_of_zeros:]=0
+            number_of_zeros = torch.sum(~attention_mask[i])
+            if number_of_zeros > 0:
+                new_attention_mask[i][-number_of_zeros:]=0
+                new_position_ids[i][-number_of_zeros:]=0
 
-        new_labels[577-1:]=labels                                                            # 反正前面是一堆-100，图像总是在前面，无论插在哪里，都是把原来非-100的labels往后面移动
+        new_labels[:,577-1:]=labels                                                            # 反正前面是一堆-100，图像总是在前面，无论插在哪里，都是把原来非-100的labels往后面移动
 
-        return new_position_ids, new_attention_mask, new_inputs_embeds,new_labels
+        return None, new_position_ids, new_attention_mask.bool(), new_inputs_embeds,new_labels
 
 
-AutoConfig.register('qwerty_qwen2', Qwen2Config)
-AutoModelForCausalLM.register(Qwen2Config, QwertyQwen2ForCausalLM)
+AutoConfig.register('qwerty_qwen2', QwertyConfig)
+AutoModelForCausalLM.register(QwertyConfig, QwertyQwen2ForCausalLM)

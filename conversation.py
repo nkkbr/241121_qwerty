@@ -63,6 +63,8 @@ class Conversation:
                     msg = message[1]
                     msg = "<|im_start|>assistant\n" + msg + "<|im_end|>\n"
                 ret += msg
+            if ret.endswith("\n"):
+                ret = ret[:-1]  # 去掉最后一个'\n'
         elif self.template_style == TemplateStyle.LLAMA3_1:
             from datetime import datetime
             current_date = datetime.now()

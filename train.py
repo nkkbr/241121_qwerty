@@ -1,32 +1,51 @@
 from dataclasses import dataclass,field
 import transformers
-from transformers import Qwen2MoeForCausalLM, Qwen2Tokenizer
+from transformers import Qwen2ForCausalLM, Qwen2Tokenizer, CLIPImageProcessor, Trainer
 from torch.utils.data import Dataset
 import json
 import conversation 
 import torch
+import os
+from PIL import Image
+from tqdm.auto import tqdm
+from typing import Dict, Sequence
+from datetime import datetime
+from qwerty_qwen2 import QwertyQwen2ForCausalLM
+
+current_time = datetime.now().strftime("%d%m%y_%H%M%S")
+output_dir = os.path.join(os.getcwd(), current_time) 
+logging_dir = os.path.join(output_dir, 'logs')
+os.makedirs(output_dir, exist_ok=True) 
+os.makedirs(logging_dir, exist_ok=True) 
+
 
 @dataclass
 class ModelArguments:
     model_name_or_path: str = "Qwen/Qwen2.5-7B-Instruct"
-
+    vision_tower_name_or_path: str = "openai/clip-vit-large-patch14-336"
 
 @dataclass
 class DataArguments:
-    image_folder: str
+    image_folder: str = "/data/uchiha_ssd2/fengqi/llava_dataset/CC3M_Pretrain_595K/images/"
     data_path: str = "/data/uchiha_ssd2/fengqi/llava_dataset/CC3M_Pretrain_595K/chat.json" 
 
 
 @dataclass
 class TrainingArguments(transformers.TrainingArguments):  
-    pass
+    output_dir: str = output_dir
+    logging_dir: str = logging_dir
+    logging_steps: int = 1
+    log_level: str = "debug"
 
-
+"""
+SupervisedDataset 和 LazySupervisedDataset 选用一个就可以
+"""
 class SupervisedDataset(Dataset):
 
     def __init__(
             self,
             data_path: str,
+            image_folder: str,
             tokenizer: transformers.PreTrainedTokenizer,
             image_processor: transformers.CLIPImageProcessor
             ):
@@ -36,14 +55,114 @@ class SupervisedDataset(Dataset):
 
         with open(data_path,'r') as f:
             data_list = json.load(f)
-        for data in data_list:
+        for cur_data in tqdm(data_list, desc="Loading data", ncols=80):
             cur_conv = conversation.conv_qwen2_5.copy()
-            
+
+            cur_image = os.path.join(image_folder,cur_data['image'])
+            cur_image = Image.open(cur_image)
+            image = image_processor(cur_image, return_tensors='pt')['pixel_values']
+            self.images.append(image)
+
+            for idx, conv in enumerate(cur_data['conversations']):
+                if idx % 2 == 0:
+                    if '<image>' in conv['value']:
+                        cur_conv.append_message(['USER',(conv['value'],cur_image)])
+                    else:
+                        cur_conv.append_message(['USER',conv['value']])
+                else:
+                    cur_conv.append_message(['ASSISTANT',conv['value']])
+            text = cur_conv.get_prompt()
+            input_ids = tokenizer(text,return_tensors="pt",add_special_tokens=False)['input_ids'][0]
+            self.input_ids.append(input_ids)
+
+            labels = convert_input_ids_to_labels_for_qwen2(input_ids)
+            self.labels.append(labels)
+
+        def __len__(self):
+            return len(self.input_ids)
+        
+        def __getitem__(self, i):
+            return dict(
+                input_ids=self.input_ids[i],
+                labels=self.labels[i],
+                images = self.images[i]
+                )
+        
+class LazySupervisedDataset(Dataset):
+
+    def __init__(
+            self,
+            data_path: str,
+            image_folder: str,
+            tokenizer: transformers.PreTrainedTokenizer,
+            image_processor: transformers.CLIPImageProcessor
+            ):
+        self.image_folder = image_folder
+        self.tokenizer = tokenizer
+        self.image_processor = image_processor
+        with open(data_path,'r') as f:
+            self.data_list = json.load(f)
+
+    def __len__(self):
+        return len(self.data_list)
+    
+    def __getitem__(self, i):
+        cur_data = self.data_list[i]
+
+        cur_conv = conversation.conv_qwen2_5.copy()
+
+        cur_image = os.path.join(self.image_folder,cur_data['image'])
+        cur_image = Image.open(cur_image)
+        image = self.image_processor(cur_image, return_tensors='pt')['pixel_values']
+
+        for idx, conv in enumerate(cur_data['conversations']):
+            if idx % 2 == 0:
+                if '<image>' in conv['value']:
+                    cur_conv.append_message(['USER',(conv['value'],cur_image)])
+                else:
+                    cur_conv.append_message(['USER',conv['value']])
+            else:
+                cur_conv.append_message(['ASSISTANT',conv['value']])
+        text = cur_conv.get_prompt()
+        # print(repr(text)) # 测试用
+        input_ids = self.tokenizer(text,return_tensors="pt",add_special_tokens=False)['input_ids'][0]
+
+        labels = convert_input_ids_to_labels_for_qwen2(input_ids)
+
+        return dict(
+            input_ids=input_ids,
+            labels=labels,
+            images=image
+            )
+        
+
+class DataCollatorForSupervisedDataset:
+
+    def __init__(
+            self,
+            tokenizer: transformers.PreTrainedTokenizer
+        ):
+        self.pad_token_id = tokenizer.pad_token_id
+
+    def __call__(
+            self,
+            batch:Sequence[Dict]
+        ):
+        input_ids, labels, images = tuple([item[key] for item in batch] for key in ['input_ids', 'labels', 'images'])
+        input_ids = torch.nn.utils.rnn.pad_sequence(
+            input_ids, batch_first=True, padding_value=self.pad_token_id
+        )
+        labels = torch.nn.utils.rnn.pad_sequence(labels, batch_first=True, padding_value=-100)
+        images = torch.cat(images,dim=0)
+        return dict(
+            input_ids=input_ids,
+            labels=labels,
+            attention_mask=input_ids.ne(self.pad_token_id),
+            images=images
+        )
 
 
-
-
-def get_labels(input_tensor):
+def convert_input_ids_to_labels_for_qwen2(input_tensor):
     """
     这个函数的输入是一个input_ids,它是用Qwen2.5的模版包装好了的对话，再tokenize后的结果，例如：
 
@@ -136,17 +255,18 @@ def get_labels(input_tensor):
             continue
 
     return result
-        
-
-
+       
 
 def train():
     parser = transformers.HfArgumentParser((ModelArguments, DataArguments, TrainingArguments))
     model_args, data_args, training_args = parser.parse_args_into_dataclasses()
-
-    model = Qwen2MoeForCausalLM.from_pretrained(model_args.model_name_or_path)
+    print("1现在载入model")
+    model = QwertyQwen2ForCausalLM.from_pretrained(model_args.model_name_or_path)
+    print("2现在载入tokenizer")
     tokenizer = Qwen2Tokenizer.from_pretrained(model_args.model_name_or_path)
-
+    print("3现在载入image_processor")
+    image_processor = CLIPImageProcessor.from_pretrained(model_args.vision_tower_name_or_path)
+    print("4现在开始修改tokenizer")
     # 如果加载的是"Qwen/Qwen2.5-7B-Instruct"的分词器，那么需要把<image>加入到特殊token中
     special_tokens = {
         "additional_special_tokens": ["<image>"]
@@ -173,7 +293,31 @@ def train():
 
     # 以上添加特殊token以及修改特殊embedding的值的步骤，仅在加载 "Qwen/Qwen2.5-7B-Instruct" 的分词器和模型权重，进行预训练的时候需要。
     # 之后的微调与推理，就不需要了
-
+    print("5现在开始建立Dataset")
+    train_dataset = LazySupervisedDataset(
+        data_path = data_args.data_path,
+        image_folder = data_args.image_folder,
+        tokenizer = tokenizer,
+        image_processor = image_processor
+    )
+    print("6现在开始建立data_collator")
+    data_collator = DataCollatorForSupervisedDataset(tokenizer=tokenizer)
+    trainer = Trainer(
+        model=model,
+        tokenizer=tokenizer,
+        args=training_args,
+        train_dataset=train_dataset,
+        eval_dataset=None,
+        data_collator=data_collator
+    )
+    print("6终于可以开始train了")
+    trainer.train()
+    print("7train完了，保存权重与分词器")
+    # 保存训练状态与权重，保存修改过的分词器
+    trainer.save_state()
+    trainer.save_model(output_dir=training_args.output_dir)
+    tokenizer.save_pretrained(output_dir=training_args.output_dir)
+    print("8顺利退出")
 
 if __name__ == "__main__":
     train()
