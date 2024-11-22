@@ -140,20 +140,20 @@ class QwertyQwen2ForCausalLM(Qwen2ForCausalLM):
                                              attention_mask,
                                              labels,
                                              images):
-        
-        image_features = self.model.vision_model(images,output_hidden_states=True).hidden_states[-2]   # 选取了倒数第二层，形状是(batch_size, 577, 1024) 577是一个CLS + (336/14)**2。 也可以不选CLS，只使用(batch_size, 576, 1024)
-        image_features = self.model.mm_projector(image_features)                                       # (batch_size, 577, 3584)
+        device = input_ids.device
+        image_features = self.model.vision_model(images.to(device),output_hidden_states=True).hidden_states[-2]   # 选取了倒数第二层，形状是(batch_size, 577, 1024) 577是一个CLS + (336/14)**2。 也可以不选CLS，只使用(batch_size, 576, 1024)
+        image_features = self.model.mm_projector(image_features)                                                  # (batch_size, 577, 3584)
         
         batch_size = input_ids.shape[0]
-        new_sequence_length = input_ids.shape[-1] + 577 - 1                                      # 如果你不选CLS，那么这里就是576
+        new_sequence_length = input_ids.shape[-1] + 577 - 1                                                       # 如果你不选CLS，那么这里就是576
 
-        image_token_id = 151665                                                                  # <image>的token_id
+        image_token_id = 151665                                                                                   # <image>的token_id
 
-        new_position_ids = torch.arange(new_sequence_length)
+        new_position_ids = torch.arange(new_sequence_length).to(device)
         new_position_ids = new_position_ids.repeat(batch_size,1)
-        new_attention_mask = torch.ones((batch_size,new_sequence_length))
-        new_labels = torch.full((batch_size,new_sequence_length),-100)                           # 
-        new_inputs_embeds = torch.zeros((batch_size,new_sequence_length,3584))                   # Qwen2.5 的嵌入维度是3584
+        new_attention_mask = torch.ones((batch_size,new_sequence_length)).to(device)
+        new_labels = torch.full((batch_size,new_sequence_length),-100).to(device)                           
+        new_inputs_embeds = torch.zeros((batch_size,new_sequence_length,3584)).to(device)                         # Qwen2.5 的嵌入维度是3584
 
         for i in range(batch_size):
             cur_input_ids = input_ids[i]

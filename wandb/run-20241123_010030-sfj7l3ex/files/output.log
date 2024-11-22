@@ -1,0 +1,46 @@
+
+  0%|                                                                                                                                                    | 0/4651 [00:00<?, ?it/s]/data/satori_hdd4/fengqi/anaconda3/envs/base_3_12/lib/python3.12/site-packages/torch/distributed/fsdp/fully_sharded_data_parallel.py:1197: UserWarning: Called FSDP.clip_grad_norm_() on rank 0 with no gradients -- returning the total norm in the default dtype torch.float32
+  warnings.warn(
+  0%|                                                                                                                                         | 1/4651 [00:27<35:04:33, 27.16s/it]
+{'loss': 309.4508, 'grad_norm': 892.998046875, 'learning_rate': 1.4285714285714287e-07, 'epoch': 0.0}
+
+  0%|                                                                                                                                         | 2/4651 [00:53<34:37:28, 26.81s/it]
+
+
+  0%|                                                                                                                                         | 4/4651 [01:46<34:26:23, 26.68s/it]
+
+  0%|▏                                                                                                                                        | 5/4651 [02:13<34:25:46, 26.68s/it]
+{'loss': 296.7774, 'grad_norm': 943.133544921875, 'learning_rate': 7.142857142857143e-07, 'epoch': 0.0}
+
+
+  0%|▏                                                                                                                                        | 7/4651 [03:06<34:20:32, 26.62s/it]
+
+  0%|▏                                                                                                                                        | 8/4651 [03:33<34:21:08, 26.64s/it]
+{'loss': 298.2467, 'grad_norm': 1108.0936279296875, 'learning_rate': 1.142857142857143e-06, 'epoch': 0.0}
+
+
+  0%|▎                                                                                                                                       | 10/4651 [04:26<34:20:21, 26.64s/it]
+
+  0%|▎                                                                                                                                       | 11/4651 [04:53<34:19:25, 26.63s/it]
+{'loss': 280.6019, 'grad_norm': 914.0509643554688, 'learning_rate': 1.5714285714285714e-06, 'epoch': 0.0}
+
+  0%|▎                                                                                                                                       | 12/4651 [05:19<34:18:39, 26.63s/it]
+
+
+  0%|▍                                                                                                                                       | 14/4651 [06:13<34:15:46, 26.60s/it]
+
+  0%|▍                                                                                                                                       | 15/4651 [06:39<34:13:13, 26.57s/it]
+{'loss': 276.9856, 'grad_norm': 627.8457641601562, 'learning_rate': 2.1428571428571427e-06, 'epoch': 0.0}
+
+
+  0%|▍                                                                                                                                       | 17/4651 [07:33<34:27:38, 26.77s/it]
+{'loss': 272.6411, 'grad_norm': 510.2787780761719, 'learning_rate': 2.428571428571429e-06, 'epoch': 0.0}
+
+  0%|▌                                                                                                                                       | 18/4651 [08:00<34:21:40, 26.70s/it]
+
+
+  0%|▌                                                                                                                                       | 20/4651 [08:53<34:15:09, 26.63s/it]
+
+  0%|▌                                                                                                                                       | 21/4651 [09:19<34:11:13, 26.58s/it]
+{'loss': 261.0762, 'grad_norm': 977.5436401367188, 'learning_rate': 3e-06, 'epoch': 0.0}
+

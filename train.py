@@ -302,6 +302,15 @@ def train():
     )
     print("6现在开始建立data_collator")
     data_collator = DataCollatorForSupervisedDataset(tokenizer=tokenizer)
+    
+    # 第一阶段的训练，是仅训练MLP
+    for name, param in model.named_parameters():
+        if 'mm_projector' in name:
+            print(f"参数名: {name}, 可训练: {param.requires_grad}")
+            param.requires_grad = True
+        else:
+            param.requires_grad = False
+    
     trainer = Trainer(
         model=model,
         tokenizer=tokenizer,
@@ -311,6 +320,8 @@ def train():
         data_collator=data_collator
     )
     print("6终于可以开始train了")
+    #trainable_params = sum(p.numel() for p in model.parameters() if p.requires_grad)
+    #print(f"Trainable parameters before Trainer initialization: {trainable_params}")
     trainer.train()
     print("7train完了，保存权重与分词器")
     # 保存训练状态与权重，保存修改过的分词器

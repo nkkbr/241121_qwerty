@@ -1,0 +1,64 @@
+
+  0%|                                                                                                                                                    | 0/4651 [00:00<?, ?it/s]/data/satori_hdd4/fengqi/anaconda3/envs/base_3_12/lib/python3.12/site-packages/torch/distributed/fsdp/fully_sharded_data_parallel.py:1197: UserWarning: Called FSDP.clip_grad_norm_() on rank 0 with no gradients -- returning the total norm in the default dtype torch.float32
+  warnings.warn(
+  0%|                                                                                                                                         | 1/4651 [00:27<34:56:42, 27.05s/it]
+
+  0%|                                                                                                                                         | 2/4651 [00:53<34:30:12, 26.72s/it]
+{'loss': 295.8009, 'grad_norm': 903.2001342773438, 'learning_rate': 2.8571428571428575e-07, 'epoch': 0.0}
+
+
+  0%|                                                                                                                                         | 4/4651 [01:46<34:22:55, 26.64s/it]
+
+  0%|▏                                                                                                                                        | 5/4651 [02:13<34:21:55, 26.63s/it]
+{'loss': 298.1332, 'grad_norm': 721.6946411132812, 'learning_rate': 7.142857142857143e-07, 'epoch': 0.0}
+
+  0%|▏                                                                                                                                        | 6/4651 [02:39<34:18:37, 26.59s/it]
+
+
+  0%|▏                                                                                                                                        | 8/4651 [03:32<34:14:25, 26.55s/it]
+  0%|▏                                                                                                                                        | 8/4651 [03:32<34:14:25, 26.55s/it]Traceback (most recent call last):
+  File "/data/uchiha_ssd2/fengqi/241121_qwerty/train.py", line 332, in <module>
+    train()
+  File "/data/uchiha_ssd2/fengqi/241121_qwerty/train.py", line 323, in train
+    trainer.train()
+  File "/data/satori_hdd4/fengqi/anaconda3/envs/base_3_12/lib/python3.12/site-packages/transformers/trainer.py", line 2122, in train
+    return inner_training_loop(
+           ^^^^^^^^^^^^^^^^^^^^
+  File "/data/satori_hdd4/fengqi/anaconda3/envs/base_3_12/lib/python3.12/site-packages/transformers/trainer.py", line 2474, in _inner_training_loop
+    tr_loss_step = self.training_step(model, inputs, num_items_in_batch)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/data/satori_hdd4/fengqi/anaconda3/envs/base_3_12/lib/python3.12/site-packages/transformers/trainer.py", line 3606, in training_step
+    self.accelerator.backward(loss, **kwargs)
+  File "/data/satori_hdd4/fengqi/anaconda3/envs/base_3_12/lib/python3.12/site-packages/accelerate/accelerator.py", line 2246, in backward
+    loss.backward(**kwargs)
+  File "/data/satori_hdd4/fengqi/anaconda3/envs/base_3_12/lib/python3.12/site-packages/torch/_tensor.py", line 521, in backward
+    torch.autograd.backward(
+  File "/data/satori_hdd4/fengqi/anaconda3/envs/base_3_12/lib/python3.12/site-packages/torch/autograd/__init__.py", line 289, in backward
+    _engine_run_backward(
+  File "/data/satori_hdd4/fengqi/anaconda3/envs/base_3_12/lib/python3.12/site-packages/torch/autograd/graph.py", line 769, in _engine_run_backward
+    return Variable._execution_engine.run_backward(  # Calls into the C++ engine to run the backward pass
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+KeyboardInterrupt
+[rank0]: Traceback (most recent call last):
+[rank0]:   File "/data/uchiha_ssd2/fengqi/241121_qwerty/train.py", line 332, in <module>
+[rank0]:     train()
+[rank0]:   File "/data/uchiha_ssd2/fengqi/241121_qwerty/train.py", line 323, in train
+[rank0]:     trainer.train()
+[rank0]:   File "/data/satori_hdd4/fengqi/anaconda3/envs/base_3_12/lib/python3.12/site-packages/transformers/trainer.py", line 2122, in train
+[rank0]:     return inner_training_loop(
+[rank0]:            ^^^^^^^^^^^^^^^^^^^^
+[rank0]:   File "/data/satori_hdd4/fengqi/anaconda3/envs/base_3_12/lib/python3.12/site-packages/transformers/trainer.py", line 2474, in _inner_training_loop
+[rank0]:     tr_loss_step = self.training_step(model, inputs, num_items_in_batch)
+[rank0]:                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+[rank0]:   File "/data/satori_hdd4/fengqi/anaconda3/envs/base_3_12/lib/python3.12/site-packages/transformers/trainer.py", line 3606, in training_step
+[rank0]:     self.accelerator.backward(loss, **kwargs)
+[rank0]:   File "/data/satori_hdd4/fengqi/anaconda3/envs/base_3_12/lib/python3.12/site-packages/accelerate/accelerator.py", line 2246, in backward
+[rank0]:     loss.backward(**kwargs)
+[rank0]:   File "/data/satori_hdd4/fengqi/anaconda3/envs/base_3_12/lib/python3.12/site-packages/torch/_tensor.py", line 521, in backward
+[rank0]:     torch.autograd.backward(
+[rank0]:   File "/data/satori_hdd4/fengqi/anaconda3/envs/base_3_12/lib/python3.12/site-packages/torch/autograd/__init__.py", line 289, in backward
+[rank0]:     _engine_run_backward(
+[rank0]:   File "/data/satori_hdd4/fengqi/anaconda3/envs/base_3_12/lib/python3.12/site-packages/torch/autograd/graph.py", line 769, in _engine_run_backward
+[rank0]:     return Variable._execution_engine.run_backward(  # Calls into the C++ engine to run the backward pass
+[rank0]:            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+[rank0]: KeyboardInterrupt
