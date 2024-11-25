@@ -20,15 +20,17 @@ os.makedirs(output_dir, exist_ok=True)
 os.makedirs(logging_dir, exist_ok=True) 
 #os.makedirs(tokenizer_dir, exist_ok=True) 
 
+local_rank = None # 其实我也还是不太知道这个具体是如何产生作用的
+
 @dataclass
 class ModelArguments:
-    model_name_or_path: str = "Qwen/Qwen2.5-7B-Instruct"
+    model_name_or_path: str = "/data/uchiha_ssd2/fengqi/241121_qwerty/231124_012656/checkpoint-4651" # 第一阶段训练的结果保存在这里
     vision_tower_name_or_path: str = "openai/clip-vit-large-patch14-336"
 
 @dataclass
 class DataArguments:
-    image_folder: str = "/data/uchiha_ssd2/fengqi/llava_dataset/CC3M_Pretrain_595K/images/"
-    data_path: str = "/data/uchiha_ssd2/fengqi/llava_dataset/CC3M_Pretrain_595K/chat.json" 
+    image_folder: str = "/data/uchiha_ssd2/fengqi/llava_dataset/COCO/train2017"
+    data_path: str = "/data/uchiha_ssd2/fengqi/llava_dataset/COCO/llava_instruct_150k.json" 
 
 
 @dataclass
@@ -88,7 +90,7 @@ class SupervisedDataset(Dataset):
             labels=self.labels[i],
             images = self.images[i]
             )
-    
+        
 class LazySupervisedDataset(Dataset):
 
     def __init__(
@@ -259,6 +261,8 @@ def convert_input_ids_to_labels_for_qwen2(input_tensor):
        
 
 def train():
+    global local_rank
+
     parser = transformers.HfArgumentParser((ModelArguments, DataArguments, TrainingArguments))
     model_args, data_args, training_args = parser.parse_args_into_dataclasses()
     print("1现在载入model")
@@ -268,7 +272,49 @@ def train():
     tokenizer = Qwen2Tokenizer.from_pretrained(model_args.model_name_or_path)
     print("3现在载入image_processor")
     image_processor = CLIPImageProcessor.from_pretrained(model_args.vision_tower_name_or_path)
-    print("4现在开始修改tokenizer")
+    print("3.5现在载入预训练的权重")
+    """
+    以下的这段代码，加载第一阶段预训练好的模型，到指定的地方。
+    """
+    from safetensors import safe_open
+    folder_path = model_args.model_name_or_path
+    merged_weights: Dict[str, torch.Tensor] = {}
+    safetensors_files = [
+        f for f in os.listdir(folder_path) 
+        if f.endswith('.safetensors')
+    ]
+
+    for file_name in safetensors_files:
+        file_path = os.path.join(folder_path, file_name)
+        with safe_open(file_path, framework="pt", device="cpu") as f:
+            keys = f.keys()
+            
+            for key in keys:
+                if key in merged_weights:
+                    print(f"警告: 键 {key} 在多个文件中出现,将使用文件 {file_name} 中的值")
+                tensor = f.get_tensor(key)
+                merged_weights[key] = tensor
+
+    for key in model.state_dict().keys():
+        if key.startswith('vision_model'):
+            print(key)
+            assert model.state_dict()[key].shape == merged_weights['model.' + key].shape, "未能正确加载模型参数"
+            model.load_state_dict({
+                **model.state_dict(),
+                **{key: merged_weights['model.' + key] for key in merged_weights}
+            }, strict=False)
+            #model.state_dict()[key] = merged_weights['model.' + key] 据说，直接修改 state_dict() 中的值通常是不被推荐的操作，因为 state_dict() 是一个浅拷贝，而不是模型参数的直接映射。这种操作可能会导致模型参数与优化器不匹配。
+        if key.startswith('mm_projector'):
+            print(key)
+            assert model.state_dict()[key].shape == merged_weights['model.' + key].shape, "未能正确加载模型参数"
+            model.load_state_dict({
+                **model.state_dict(),
+                **{key: merged_weights['model.' + key] for key in merged_weights}
+            }, strict=False)
+            #model.state_dict()[key] = merged_weights['model.' + key] 据说，直接修改 state_dict() 中的值通常是不被推荐的操作，因为 state_dict() 是一个浅拷贝，而不是模型参数的直接映射。这种操作可能会导致模型参数与优化器不匹配。
+    print("3.75预训练的权重加载完毕")
+    #print("4现在开始修改tokenizer")
+    """
     # 如果加载的是"Qwen/Qwen2.5-7B-Instruct"的分词器，那么需要把<image>加入到特殊token中
     special_tokens = {
         "additional_special_tokens": ["<image>"]
@@ -295,6 +341,7 @@ def train():
 
     # 以上添加特殊token以及修改特殊embedding的值的步骤，仅在加载 "Qwen/Qwen2.5-7B-Instruct" 的分词器和模型权重，进行预训练的时候需要。
     # 之后的微调与推理，就不需要了
+    """
     print("5现在开始建立Dataset")
     train_dataset = LazySupervisedDataset(
         data_path = data_args.data_path,
@@ -305,13 +352,13 @@ def train():
     print("6现在开始建立data_collator")
     data_collator = DataCollatorForSupervisedDataset(tokenizer=tokenizer)
     
-    # 第一阶段的训练，是仅训练MLP
+    # 第二阶段的微调，只冻结vision tower
     for name, param in model.named_parameters():
-        if 'mm_projector' in name:
-            print(f"参数名: {name}, 可训练: {param.requires_grad}")
-            param.requires_grad = True
-        else:
+        if 'vision_model' in name:
+            #print(f"参数名: {name}, 可训练: {param.requires_grad}")
             param.requires_grad = False
+        else:
+            param.requires_grad = True
     
     trainer = Trainer(
         model=model,
@@ -322,8 +369,10 @@ def train():
         data_collator=data_collator
     )
     print("6终于可以开始train了")
-    #trainable_params = sum(p.numel() for p in model.parameters() if p.requires_grad)
-    #print(f"Trainable parameters before Trainer initialization: {trainable_params}")
+    trainable_params = sum(p.numel() for p in model.parameters() if p.requires_grad)
+    print(f"Trainable parameters: {trainable_params}")
+    params = sum(p.numel() for p in model.parameters())
+    print(f"Parameters: {params}")
     trainer.train()
     print("7train完了，保存权重与分词器")
     # 保存训练状态与权重，保存修改过的分词器
