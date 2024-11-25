@@ -264,9 +264,13 @@ def train():
     global local_rank
 
     parser = transformers.HfArgumentParser((ModelArguments, DataArguments, TrainingArguments))
+    
     model_args, data_args, training_args = parser.parse_args_into_dataclasses()
     print("1现在载入model")
-    model = QwertyQwen2ForCausalLM.from_pretrained(model_args.model_name_or_path)
+    model = QwertyQwen2ForCausalLM.from_pretrained(
+        model_args.model_name_or_path,
+        torch_dtype=(torch.bfloat16 if training_args.bf16 else None),
+        )
     model.config.use_cache = False # 训练不需要在前向传播时缓存计算的中间激活值（hidden states）
     print("2现在载入tokenizer")
     tokenizer = Qwen2Tokenizer.from_pretrained(model_args.model_name_or_path)
@@ -373,6 +377,9 @@ def train():
     print(f"Trainable parameters: {trainable_params}")
     params = sum(p.numel() for p in model.parameters())
     print(f"Parameters: {params}")
+    #for name, param in model.named_parameters():
+    #    print(name)
+    #    print(f"          {param.dtype}")
     trainer.train()
     print("7train完了，保存权重与分词器")
     # 保存训练状态与权重，保存修改过的分词器

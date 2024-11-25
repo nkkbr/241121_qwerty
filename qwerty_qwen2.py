@@ -170,7 +170,7 @@ class QwertyQwen2ForCausalLM(Qwen2ForCausalLM):
                 new_position_ids[i][-number_of_zeros:]=0
 
         new_labels[:,577-1:]=labels                                                                                   # 反正前面是一堆-100，图像总是在前面，无论插在哪里，都是把原来非-100的labels往后面移动
-
+        new_inputs_embeds = new_inputs_embeds.to(torch.bfloat16)
         return None, new_position_ids, new_attention_mask.bool(), new_inputs_embeds,new_labels
 
 
