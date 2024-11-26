@@ -29,3 +29,6 @@ torchrun --nproc_per_node=4 --master_port=29500 finetune.py \
 # 
 # mkdir -p /tmp/triton_autotune
 # chmod 700 /tmp/triton_autotune
+
+
+# deepspeed "./script/default_offload_opt_param.json" 里关于scheduler的设置，似乎与这里的consine冲突了，可能应该删去
