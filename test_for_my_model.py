@@ -18,6 +18,9 @@ model.to(device)
 model.config.use_cache = True
 tokenizer = Qwen2Tokenizer.from_pretrained(model_name_or_path)
 image_processor = CLIPImageProcessor.from_pretrained(vision_tower_name_or_path)
+print(f"model.config.eos_token_id:   {model.config.eos_token_id}")
+print(f"tokenizer.eos_token_id:   {tokenizer.eos_token_id}")
+
 
 from safetensors import safe_open
 folder_path = model_name_or_path
@@ -55,20 +58,36 @@ for key in model.state_dict().keys():
             **{key: merged_weights['model.' + key] for key in merged_weights}
         }, strict=False)
         
+missing_keys, unexpected_keys = model.load_state_dict({
+    **model.state_dict(),
+    **{key: merged_weights[key] for key in merged_weights}
+}, strict=False)
+print(f"Missing keys: {missing_keys}")
+print(f"Unexpected keys: {unexpected_keys}")
+        
 image_path:str = "test_images/1.T.jpg"
 #image_path:str = "test_images/2.G.jpg"
-prompt :str = "<image>\nIs there a flag in this picture?"
+prompt :str = "<image>\nWho is in the center of this image? Answer in one sentence."
+prompt :str = "<image>\nIs there a flag in the picture? Provide a clear yes or no answer."
+prompt :str = "<image>\nWhat is unusual in this picture? Answer concisely."
+
 
 """
 image_path = '/data/uchiha_ssd2/fengqi/llava_dataset/COCO/train2017/000000353197.jpg'
 prompt = 'What do you see happening in this image?\n<image>'
 """
 
+image_path:str = "test_images/1.T.jpg"
+prompt :str = "<image>\nDescribe this picture concisely."
+
 cur_conv = conversation.conv_qwen2_5.copy()
 cur_image = Image.open(image_path)
 image = image_processor(cur_image, return_tensors='pt')['pixel_values']
 cur_conv.append_message(['USER',(prompt,cur_image)])
 text = cur_conv.get_prompt()
+text += "\n<|im_start|>assistant\n"
+print("input:")
+print(repr(text))
 input_ids = tokenizer(text,return_tensors="pt",add_special_tokens=False)['input_ids'][0]
 input_ids = input_ids.unsqueeze(0)
 attention_mask = torch.ones_like(input_ids)
@@ -80,7 +99,7 @@ attention_mask = attention_mask.to(device)
 labels = labels.to(device)
 output_ids = model.generate(
     inputs=input_ids,       # 输入 tokens
-    max_length=2048,                      
+    max_length=1024,                      
     num_return_sequences=1,             # 返回生成的序列数
     temperature=0.7,                    # 控制生成的多样性
     top_k=50,                           # 限制最高概率的 K 个标记
@@ -89,9 +108,10 @@ output_ids = model.generate(
     images=image,
     attention_mask=attention_mask,
     labels=labels,
-    use_cache=True
+    use_cache=True,
 )
 
+print(output_ids)
 generated_text = tokenizer.decode(output_ids[0], skip_special_tokens=True)
 print(f"生成的文本: {generated_text}")
 

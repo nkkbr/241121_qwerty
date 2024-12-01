@@ -104,6 +104,7 @@ conv_llama3_1 = Conversation(template_style=TemplateStyle.LLAMA3_1)
 
 if __name__ == "__main__":
 
+    """
     # 简单地测试
     print("conv_qwen2_5 初始化后的内容：")
     print(conv_qwen2_5.get_prompt())
@@ -127,3 +128,8 @@ if __name__ == "__main__":
     conv_llama3_1.append_message(['ASSISTANT',"Bye."])
     print("添加另一段对话后：")
     print(conv_llama3_1.get_prompt())
+    """
+
+    conv_qwen2_5.append_message(['USER',('What do you see happening in this image?\n<image>',Image.Image())])
+    conv_qwen2_5.append_message(['ASSISTANT',"The scene captures a man in midair, performing a high-flying jump while riding a skateboard. He appears to be jumping off a concrete wall. A group of spectators, including seven people spread around the area, are attentively watching the skateboarder's daring leap. Some are standing close to the main action, while others are further away.\n\nThere are a few items scattered around the location: two bottles can be seen nearby, and a backpack is placed on the ground. Additionally, there is a second skateboard resting on the ground a bit further from the main skateboarder, possibly belonging to another participant or enthusiast present at the scene."])
+    print(conv_qwen2_5.get_prompt())
