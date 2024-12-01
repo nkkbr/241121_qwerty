@@ -1,5 +1,5 @@
 import torch
-from qwerty_qwen2 import QwertyQwen2ForCausalLM
+from qwerty_qwen2_update import QwertyQwen2ForCausalLM
 from transformers import Qwen2ForCausalLM, Qwen2Tokenizer, CLIPImageProcessor, Trainer
 from typing import Dict, Sequence
 import os
@@ -55,8 +55,14 @@ for key in model.state_dict().keys():
             **{key: merged_weights['model.' + key] for key in merged_weights}
         }, strict=False)
         
-image_path:str = "test_images/Election-2024-Trump-145-1721122911.jpg"
-prompt :str = "<image>\nDescribe this picture in detail."
+image_path:str = "test_images/1.T.jpg"
+#image_path:str = "test_images/2.G.jpg"
+prompt :str = "<image>\nIs there a flag in this picture?"
+
+"""
+image_path = '/data/uchiha_ssd2/fengqi/llava_dataset/COCO/train2017/000000353197.jpg'
+prompt = 'What do you see happening in this image?\n<image>'
+"""
 
 cur_conv = conversation.conv_qwen2_5.copy()
 cur_image = Image.open(image_path)
@@ -74,7 +80,7 @@ attention_mask = attention_mask.to(device)
 labels = labels.to(device)
 output_ids = model.generate(
     inputs=input_ids,       # 输入 tokens
-    max_length=30000,                      
+    max_length=2048,                      
     num_return_sequences=1,             # 返回生成的序列数
     temperature=0.7,                    # 控制生成的多样性
     top_k=50,                           # 限制最高概率的 K 个标记
