@@ -1,1 +1,19 @@
-"/data/uchiha_ssd2/fengqi/241121_qwerty/231124_012656/checkpoint-4651" 第一阶段预训练的模型权重和分词器
+这一轮的学习率，用了warmup再直线下降的方式，有很明显的grokking的现象
+
+    第一阶段训练 bash /data/uchiha_ssd2/fengqi/241121_qwerty/script/pretrain.sh
+
+        "/data/uchiha_ssd2/fengqi/241121_qwerty/231124_012656/checkpoint-4651" 第一阶段预训练的模型权重和分词器
+            https://wandb.ai/fengqi2016/huggingface/runs/i9jr38v1
+
+    第二阶段训练 bash /data/uchiha_ssd2/fengqi/241121_qwerty/script/finetune_deepspeed_zero_3_4gpu.sh
+
+        "/data/uchiha_ssd2/fengqi/241121_qwerty/251124_230127"                 第二阶段预训练的模型权重和分词器
+            https://wandb.ai/fengqi2016/huggingface/runs/mlf0uqnx
+
+    【ERROR】
+    第二阶段训练_plus_one bash /data/uchiha_ssd2/fengqi/241121_qwerty/script/finetune_deepspeed_zero_3_4gpu_plus_one.sh
+        但这个并不是简单地等效于plus_one，特别是learning rate，这里使用了恒定的1e-9的学习率
+        loss一直都是现实0，grad_norm现实NaN，失败了，不知道是为什么
+
+这一轮的学习率，我们正确地设置为先warmup再cosine下降的方式
+

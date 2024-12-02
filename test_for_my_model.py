@@ -78,7 +78,7 @@ prompt = 'What do you see happening in this image?\n<image>'
 """
 
 image_path:str = "test_images/1.T.jpg"
-prompt :str = "<image>\nDescribe this picture concisely."
+prompt :str = "<image>\nDescribe this picture in detail."
 
 cur_conv = conversation.conv_qwen2_5.copy()
 cur_image = Image.open(image_path)
@@ -101,9 +101,9 @@ output_ids = model.generate(
     inputs=input_ids,       # 输入 tokens
     max_length=1024,                      
     num_return_sequences=1,             # 返回生成的序列数
-    temperature=0.7,                    # 控制生成的多样性
-    top_k=50,                           # 限制最高概率的 K 个标记
-    top_p=0.95,                         # 过滤累积概率小于 P 的标记
+    temperature=0.5,                    # 控制生成的多样性
+    top_k=30,                           # 限制最高概率的 K 个标记
+    top_p=0.85,                         # 过滤累积概率小于 P 的标记
     do_sample=True,                     # 使用采样生成（而非贪心算法）
     images=image,
     attention_mask=attention_mask,
